@@ -1,6 +1,9 @@
-import pandas as pd
+from bs4 import BeautifulSoup
+import requests
 
-states-["Califoni"]
+website = "https://subslikescript.com/movie/Titanic-120338"
+result = requests.get(website)
+content = result.text
 
-with open('test.txt','w') as file:
-   file.write("Test Text")
+soup = BeautifulSoup(content, 'lxml')
+print(soup.prettify())
