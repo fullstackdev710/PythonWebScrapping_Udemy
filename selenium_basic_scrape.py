@@ -6,7 +6,7 @@ import pandas as pd
 import time
 
 website = 'https://www.adamchoi.co.uk/overs/detailed'
-path = '/selenium_driver/chromedriver'
+
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get(website)
 
