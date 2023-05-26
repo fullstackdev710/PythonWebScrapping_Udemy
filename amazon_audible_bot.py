@@ -1,7 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
@@ -14,7 +15,7 @@ website = "https://www.audible.com/adblbestsellers?ref=a_search_t1_navTop_pl0cg1
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 driver.get(website)
-driver.maximize_window()
+# driver.maximize_window()
 
 # pagination
 pagination = driver.find_element('xpath', '//ul[contains(@class, "pagingElements")]')
@@ -28,9 +29,11 @@ book_author = []
 book_length = []
 
 while current_page <= last_page:
-   time.sleep(2)
-   container = driver.find_element('class name', 'adbl-impression-container')
-   products = container.find_elements('xpath', './/li[contains(@class, "productListItem")]')
+   # time.sleep(2)
+   # container = driver.find_element('class name', 'adbl-impression-container')
+   # products = container.find_elements('xpath', './/li[contains(@class, "productListItem")]')
+   container = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'adbl-impression-container')))
+   products = WebDriverWait(container, 10).until(EC.presence_of_all_elements_located((By.XPATH, './/li[contains(@class, "productListItem")]')))
 
    for product in products:
       title = product.find_element('xpath', './/h3[contains(@class, "bc-heading")]').text
