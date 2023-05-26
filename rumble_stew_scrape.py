@@ -55,6 +55,5 @@ for i in indexes:
 
 with open(f'stew_videos/title_list.txt', 'w') as file:
    for title in titles:
-      file.write(title)
-      file.write('')
+      file.write(title + '\n\n')
 
